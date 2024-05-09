@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,22 +16,37 @@ import java.util.Optional;
 public class CountrylanguageRepositoryTests {
     @Autowired
     private CountrylanguageRepository countryLanguageRepository;
+    @Autowired
     private CountryRepository countryRepository;
+
     @Test
     void findACountriesLanguage(){
         Optional<Country> gb = countryRepository.findCountryByCode("GBR");
-        List<Countrylanguage> languages = countryLanguageRepository.findCountrylanguageByCountryCode(gb.get());
-        Countrylanguage England = languages.getFirst();
-        Assertions.assertEquals("English", England.getIsOfficial());
+        List<Countrylanguage> officialLanguages = countryLanguageRepository.findCountrylanguageByCountryCodeAndIsOfficial(gb.get(), "T");
+        Countrylanguage unitedKingdom = officialLanguages.getFirst();
+        Assertions.assertEquals("English", unitedKingdom.getId().getLanguage());
+    }
+
+    //For a given country, approximately how many people speak its most popular official language?
+    @Test
+    void findIfItIsAnOfficialLanguage(){
+        Optional<Country> gb = countryRepository.findCountryByCode("GBR");
+        List<Countrylanguage> languages = countryLanguageRepository.findCountrylanguageByCountryCodeAndIsOfficial(gb.get(), "T");
+        Countrylanguage unitedKingdom = languages.getFirst();
+        System.out.println(languages);
+
+        Assertions.assertEquals("T", unitedKingdom.getIsOfficial());
+    }
+
+    @Test
+    void findPercentageOfOfficialLanguageSpeakers(){
+        Optional<Country> gb = countryRepository.findCountryByCode("GBR");
+        List<Countrylanguage> languages = countryLanguageRepository.findCountrylanguageByCountryCodeAndIsOfficial(gb.get(), "T");
+        Countrylanguage unitedKingdom = languages.getFirst();
+        BigDecimal percentageOfEnglishSpeakers = BigDecimal.valueOf(97.3);
+
+        Assertions.assertEquals(percentageOfEnglishSpeakers, unitedKingdom.getPercentage());
     }
     
-//    @Test
-//    void findCountryLang() {
-//        String countryName = "England";
-//        Country england = new Country();
-//        england.setName(countryName);
-//        england.setCode("GBR");
-//        language re
-//    }
 
 }

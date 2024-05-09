@@ -2,6 +2,7 @@ package com.sparta.sqlworlddatabase.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -42,6 +43,7 @@ public class Countrylanguage {
         this.countryCode = countryCode;
     }
 
+    @Transactional
     public String getIsOfficial() {
         return isOfficial;
     }

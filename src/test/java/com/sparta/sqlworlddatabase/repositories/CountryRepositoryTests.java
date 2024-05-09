@@ -48,12 +48,12 @@ public class CountryRepositoryTests {
 
     @Test
     void findCountryByCode_ReturnsCorrectCountryWhenProvidedWithAValidCode(){
-        String countryCode = "CHI"; // Chile's country code
-        Country chile = new Country();
-        chile.setCode(countryCode);
-        chile.setName("Chile");
+        String countryCode = "GBR"; // UK's country code
+        Country gb = new Country();
+        gb.setCode(countryCode);
+        gb.setName("United Kingdom");
         Country result = countryRepository.findCountryByCode(countryCode).get();
-        Assertions.assertEquals(chile.getName(), result.getName());
+        Assertions.assertEquals(gb.getName(), result.getName());
     }
 
     @Test

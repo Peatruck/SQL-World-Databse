@@ -38,8 +38,35 @@ public class CityRepositoryTests {
     }
 
     @Test
-    void findUniqueDistrictBy_ReturnsListOfUniqueDistricts() {
-        List<District> districts = cityRepository.findUniqueDistrictBy();
-        System.out.println(districts);
+    void findUniqueDistrictBy_ReturnsANonEmptyListOfUniqueDistricts() {
+        List<District> districts = cityRepository.findDistinctDistrictBy();
+        Assertions.assertFalse(districts.isEmpty());
+    }
+
+    @Test
+    void findUniqueDistrictBy_ReturnsAListThatIsShorterThanTheNumberOfRecordsInTable() {
+        List<District> districts = cityRepository.findDistinctDistrictBy();
+        int totalRecordsInTable = 4079;
+        Assertions.assertTrue(districts.size() < totalRecordsInTable);
+    }
+
+    @Test
+    void findCitiesByDistrict_ReturnsAListOfCitiesWhenAValidDistrictIsProvided() {
+        List<City> cities = cityRepository.findCitiesByDistrict("Groningen");
+        Assertions.assertFalse(cities.isEmpty());
+    }
+
+    @Test
+    void findCitiesByDistrict_ReturnsAListWithTheExpectedNumberOfCities() {
+        int expectedNumberOfCities = 6;
+        List<City> cities = cityRepository.findCitiesByDistrict("Zuid-Holland");
+        Assertions.assertEquals(expectedNumberOfCities, cities.size());
+    }
+
+    @Test
+    void findCitiesByDistrict_ReturnsAnEmptyListWhenProvidedWithAnInvalidDistrict() {
+        int expectedNumberOfCities = 0;
+        List<City> cities = cityRepository.findCitiesByDistrict("Invalid-District");
+        Assertions.assertEquals(expectedNumberOfCities, cities.size());
     }
 }
