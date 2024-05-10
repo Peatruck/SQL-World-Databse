@@ -23,6 +23,18 @@ public class City {
     @Column(name = "Population", nullable = false)
     private Integer population;
 
+    @ManyToOne
+    @JoinColumn(name = "CountryCode", nullable = false)
+    private Country country;
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
     public Integer getId() {
         return id;
     }

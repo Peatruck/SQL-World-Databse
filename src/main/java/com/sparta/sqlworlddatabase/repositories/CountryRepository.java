@@ -8,4 +8,8 @@ import java.util.Optional;
 
 public interface CountryRepository extends JpaRepository<Country, String> {
     List<Country> findCountriesByHeadOfStateIsNull();
+
+    Optional<Country> findCountryByName(String name);
+    //Optional<Country> findCountryByMostCities();
+    Optional<Country> findCountryByCode(String code);
 }
